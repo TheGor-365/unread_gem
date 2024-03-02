@@ -3,9 +3,19 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    
+    return unless current_user
+
+    @posts.each do |post|
+      post.mark_as_read! for: current_user
+    end
   end
 
-  def show; end
+  def show
+    return unless current_user
+    @post.mark_as_read! for: current_user
+  end
+
   def edit; end
 
   def new
